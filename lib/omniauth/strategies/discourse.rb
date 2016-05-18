@@ -1,5 +1,5 @@
 require "omniauth"
-require "discourse/sso"
+require "omniauth/strategies/discourse/sso"
 
 module OmniAuth
   module Strategies
