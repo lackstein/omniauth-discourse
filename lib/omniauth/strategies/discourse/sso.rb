@@ -10,7 +10,8 @@ module OmniAuth
           attr_accessor :config #    {:sso_secret=>"", :sso_url=>"", :return_url=>""} This should be set in application intialization.
         end
 
-        def initialize(nonce = nil)
+        def initialize(sso_secret, sso_url, return_url, nonce = nil)
+          @sso_secret, @sso_url, @return_url = sso_secret, sso_url, return_url
           @nonce = nonce ? nonce : generate_nonce!
         end
 
@@ -19,7 +20,7 @@ module OmniAuth
         end
 
         def request_url
-          "#{ self.class.config[:sso_url] }?sso=#{ url_encoded_payload }&sig=#{ hex_signature }"
+          "#{ @sso_url }?sso=#{ url_encoded_payload }&sig=#{ hex_signature }"
         end
 
         def parse(params)
@@ -59,7 +60,7 @@ module OmniAuth
             unless @nonce
               raise "You must generate a nonce by calling generate_nonce! first."
             else
-              "nonce=#{ @nonce }&return_sso_url=#{ self.class.config[:return_url] }"
+              "nonce=#{ @nonce }&return_sso_url=#{ @return_url }"
             end
           end
 
@@ -76,7 +77,7 @@ module OmniAuth
           end
 
           def get_hmac_hex_string payload
-            OpenSSL::HMAC.hexdigest("sha256", self.class.config[:sso_secret], payload)
+            OpenSSL::HMAC.hexdigest("sha256", @sso_secret, payload)
           end
 
           def base64? data
