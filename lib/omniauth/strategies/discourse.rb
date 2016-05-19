@@ -23,9 +23,12 @@ module OmniAuth
         sso = SSO.new(options.sso_secret, options.sso_url, callback_url, session[:sso_nonce])
         sso.parse(request.params)
         
-        fail!(:invalid_credentials, "Username or password are not valid") if sso.status == "error"
+        raise OmniAuth::NoSessionError, "Username or password are not valid" if sso.status == "error"
         
         @user_info = sso.user_info
+        
+      rescue OmniAuth::NoSessionError => e
+        fail!(:invalid_credentials, e)
       end
       
       uid do

@@ -5,11 +5,7 @@ module OmniAuth
     class Discourse
       class SSO
         attr_accessor :nonce, :user_info, :status, :message
-
-        class << self
-          attr_accessor :config #    {:sso_secret=>"", :sso_url=>"", :return_url=>""} This should be set in application intialization.
-        end
-
+        
         def initialize(sso_secret, sso_url, return_url, nonce = nil)
           @sso_secret, @sso_url, @return_url = sso_secret, sso_url, return_url
           @nonce = nonce ? nonce : generate_nonce!
@@ -24,10 +20,10 @@ module OmniAuth
         end
 
         def parse(params)
-          #params should be something that looks like: {sso: "xxxxxx", sig: "yyyyyy"} 
-          if get_hmac_hex_string(params[:sso]) == params[:sig] 
-            if base64? params[:sso]
-              decoded_hash = Rack::Utils.parse_query(Base64.decode64(params[:sso]))
+          #params should be something that looks like: {"sso": "xxxxxx", "sig": "yyyyyy"} 
+          if get_hmac_hex_string(params["sso"]) == params["sig"] 
+            if base64? params["sso"]
+              decoded_hash = Rack::Utils.parse_query(Base64.decode64(params["sso"]))
               decoded_hash.symbolize_keys!
               if decoded_hash[:nonce] == @nonce   
                 @status = "success"
