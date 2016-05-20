@@ -6,7 +6,13 @@ Allows OmniAuth to authenticate against a Discourse forum.
 
 On your Discourse forum, go into the Admin Settings, check "enable sso provider" and generate a strong secret for "sso secret".
 
-In your Rails app, add the following line to your OmniAuth initializer:
+In your Rails app:
+
+Add the following line to your Gemfile:
+
+    gem 'omniauth-discourse'
+
+Then add the following line to your OmniAuth initializer:
 
 	  provider :discourse,
 	    sso_url: "https://forum.example.com/session/sso_provider",
