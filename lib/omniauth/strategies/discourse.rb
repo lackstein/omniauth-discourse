@@ -22,19 +22,19 @@ module OmniAuth
       def callback_phase
         sso = SSO.new(options.sso_secret, options.sso_url, callback_url, session[:sso_nonce])
         sso.parse(request.params)
-        
         raise OmniAuth::NoSessionError, "Username or password are not valid" if sso.status == "error"
-        
+
         @user_info = sso.user_info
         
+        super
       rescue OmniAuth::NoSessionError => e
         fail!(:invalid_credentials, e)
       end
-      
+
       uid do
         user_info[:external_id]
       end
-      
+
       info do
         {
           "name" => user_info[:name],
@@ -42,7 +42,7 @@ module OmniAuth
           "nickname" => user_info[:username]
         }
       end
-      
+
       extra do
         {
           "admin" => user_info[:admin] == "true",
