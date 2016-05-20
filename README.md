@@ -14,9 +14,9 @@ Add the following line to your Gemfile:
 
 Then add the following line to your OmniAuth initializer:
 
-	  provider :discourse,
-	    sso_url: "https://forum.example.com/session/sso_provider",
-	    sso_secret: Rails.application.secrets.sso_secret
+    provider :discourse,
+      sso_url: "https://forum.example.com/session/sso_provider",
+      sso_secret: Rails.application.secrets.sso_secret
 Make sure you set the URL to point to your forum, and the secret to the secret generated earlier.
 
 That's it!
