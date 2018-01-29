@@ -1,4 +1,6 @@
 # OmniAuth Discourse
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Flackstein%2Fomniauth-discourse.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Flackstein%2Fomniauth-discourse?ref=badge_shield)
+
 
 Allows OmniAuth to authenticate against a Discourse forum.
 
@@ -43,3 +45,6 @@ The following information about each user will be available in the OmniAuth auth
         "moderator" => user_info[:moderator] == "true"
       }
     end
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Flackstein%2Fomniauth-discourse.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Flackstein%2Fomniauth-discourse?ref=badge_large)
