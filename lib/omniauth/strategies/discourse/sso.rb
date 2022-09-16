@@ -65,7 +65,7 @@ module OmniAuth
           end
 
           def url_encoded_payload
-            URI.escape(base64_encoded_payload)
+            CGI.escape(base64_encoded_payload)
           end
 
           def hex_signature
